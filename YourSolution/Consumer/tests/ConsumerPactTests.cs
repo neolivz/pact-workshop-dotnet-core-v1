@@ -43,6 +43,12 @@ namespace tests
                                         message = invalidRequestMessage
                                     }
                                 });
+                                // Act
+            var result = ConsumerApiClient.ValidateDateTimeUsingProviderApi("lolz", _mockProviderServiceBaseUri).GetAwaiter().GetResult();
+            var resultBodyText = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            // Assert
+            Assert.Contains(invalidRequestMessage, resultBodyText);
         }
     }
 }

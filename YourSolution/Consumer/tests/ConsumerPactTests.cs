@@ -18,5 +18,31 @@ namespace tests
             _mockProviderService.ClearInteractions(); //NOTE: Clears any previously registered interactions before the test is run
             _mockProviderServiceBaseUri = fixture.MockProviderServiceBaseUri;
         }
+
+        [Fact]
+        public void ItHandlesInvalidDateParam()
+        {
+            // Arange
+            var invalidRequestMessage = "validDateTime is not a date or time";
+            _mockProviderService.Given("There is data")
+                                .UponReceiving("A invalid GET request for Date Validation with invalid date parameter")
+                                .With(new ProviderServiceRequest 
+                                {
+                                    Method = HttpVerb.Get,
+                                    Path = "/api/provider",
+                                    Query = "validDateTime=lolz"
+                                })
+                                .WillRespondWith(new ProviderServiceResponse {
+                                    Status = 400,
+                                    Headers = new Dictionary<string, object>
+                                    {
+                                        { "Content-Type", "application/json; charset=utf-8" }
+                                    },
+                                    Body = new 
+                                    {
+                                        message = invalidRequestMessage
+                                    }
+                                });
+        }
     }
 }

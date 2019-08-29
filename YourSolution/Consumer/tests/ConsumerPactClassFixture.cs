@@ -44,7 +44,7 @@ namespace tests
                 if (disposing)
                 {
                     // This will save the pact file once finished.
-                    PactBuilder.Build();xw
+                    PactBuilder.Build();
                 }
 
                 disposedValue = true;
